@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Borrowed Books{% endblock %}
+
+{% block content %}
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+
+    <link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+
+    <div class="container mt-4 text-white">
+        <h2 class="mb-4">Borrowed Books</h2>
+        <table class="table table-dark table-striped">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Book Title</th>
+                    <th>Borrower</th>
+                    <th>Borrow Date</th>
+                    <th>Return Date</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for borrowed_book in borrowed_books %}
+
+                <tr>
+                    {% if borrowed_book.is_returned is False %}
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ borrowed_book.book.title }}</td>
+                    <td>{{ borrowed_book.user.firstname }} {{ borrowed_book.user.lastname }}</td>
+                    <td>{{ borrowed_book.borrow_date }}</td>
+                    <td>{{ borrowed_book.return_date|default:"Not returned" }}</td>
+
+
+                </tr>
+                    {% endif %}
+                {% empty %}
+                <tr>
+                    <td colspan="6" class="text-center">No borrowed books found.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Bootstrap JS (Optional) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+{% endblock %}

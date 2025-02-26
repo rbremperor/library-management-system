@@ -1,3 +1,5 @@
+from sqlite3 import IntegrityError
+
 from django.shortcuts import render, redirect, HttpResponse
 from .models import Books, Users, BorrowedBooks
 from django.db.models import Sum
@@ -6,6 +8,17 @@ def all_book(request):
     books = Books.objects.all()
     return render(request, 'all_books.html', {'books': books})
 
+def available_books(request):
+    available_books = Books.objects.filter(count__gt=0)
+    return render(request, 'available_books.html', {'available_books': available_books})
+
+def show_users(request):
+    users = Users.objects.all()
+    return render(request, 'users.html', {'users': users})
+
+def show_borrowed_books(request):
+    borrowed_books = BorrowedBooks.objects.all()
+    return render(request, 'borrowed_books.html', {'borrowed_books': borrowed_books})
 def home(request):
     total_books = Books.objects.aggregate(total=Sum('count')).get('total', 0)
     total_users = Users.objects.count()
@@ -61,13 +74,16 @@ def borrow_book(request):
         try:
             user = Users.objects.get(id=user_id)
             book = Books.objects.get(id=book_id)
-
-            BorrowedBooks.objects.create(user=user, book=book, borrow_date=borrow_date, return_date=return_date)
+            if book.count == 0:
+                return redirect('home')
             book.count -= 1
+            BorrowedBooks.objects.create(user=user, book=book, borrow_date=borrow_date, return_date=return_date)
             book.save()
             return redirect('home')
-        except (Users.DoesNotExist, Books.DoesNotExist):
-            pass
+        except (Users.DoesNotExist, Books.DoesNotExist, ):
+            return redirect('home')
+        except IntegrityError:
+            return redirect('home')
 
     borrowed_books = BorrowedBooks.objects.all()
     books = Books.objects.all()
