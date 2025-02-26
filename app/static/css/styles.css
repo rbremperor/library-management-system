@@ -1,0 +1,57 @@
+/* Navbar should always be at the top */
+.navbar {
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    background-color: #1e1e1e;
+    display: flex;
+    justify-content: space-between; /* Spread out content */
+    align-items: center;
+    padding: 10px 20px;
+    height: 60px; /* Set a fixed height */
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+/* Navbar Brand (Library System) */
+.navbar .logo {
+    font-size: 20px;
+    color: white;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Space between icon and text */
+}
+
+/* Navbar Links */
+.navbar-nav {
+    display: flex;
+    gap: 20px; /* Add spacing between items */
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.navbar-nav .nav-item {
+    display: inline-block;
+}
+
+.navbar-nav .nav-link {
+    font-size: 16px;
+    color: white;
+    text-decoration: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    transition: color 0.3s ease-in-out, background 0.3s ease-in-out;
+}
+
+.navbar-nav .nav-link:hover {
+    color: #0dbf0d !important;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+/* Prevent content from being hidden under navbar */
+.container {
+    margin-top: 80px; /* Push content down */
+}

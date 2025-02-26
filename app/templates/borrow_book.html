@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% block title %}Dashboard{% endblock %}
+{% load static %}
+{% block content %}
+
+
+
+<link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
+<div class="container w-100">
+        <h2 class="mb-4">Borrow a Book</h2>
+        <form method="POST" action="{% url 'borrow_book' %}" class="p-4 border rounded bg-dark">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="user_select" class="form-label text-white">Select User:</label>
+                <select name="user" id="user_select" class="form-control" required>
+                {% for user in users %}
+                <option value="{{ user.id }}">{{ user.firstname }} {{ user.lastname }}</option>
+                {% endfor %}
+                </select>
+            </div>
+
+            <div class="mb-3">
+            <label for="book_select" class="form-label text-white">Select Book:</label>
+            <select name="book" id="book_select" class="form-control" required>
+            {% for book in books %}
+            <option value="{{ book.id }}">{{ book.title }}</option>
+            {% endfor %}
+            </select>
+            </div>
+            <div class="mb-3">
+            <label for="took_on" class="form-label text-white">Date Borrowed:</label>
+            <input name="borrow_date" id="borrow_date" type="date"  class="form-control"required>
+            </div>
+            <div class="mb-3">
+            <label for="returned_on" class="form-label text-white">Date Returned (if applicable):</label>
+            <input name="return_date" id="return_date" class="form-control" type="date">
+            </div>
+            <button type="submit" class="btn btn-primary">Borrow</button>
+        </form>
+</div>
+
+{% endblock %}

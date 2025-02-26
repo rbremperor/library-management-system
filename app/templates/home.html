@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+{% block title %}Dashboard{% endblock %}
+{% load static %}
+{% block content %}
+
+
+<link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+
+<div class="dashboard-container">
+
+    <h2 class="section-title">
+        📊 Quick Stats
+    </h2>
+    <div class="stats-container">
+        <a href="{% url 'all_books' %}">
+        <div class="stat-card">
+            <h5>Total Books</h5>
+            <h3>{{ total_books }}</h3>
+        </div>
+        </a>
+        <div class="stat-card">
+            <h5>Available Books</h5>
+            <h3>{{ available_books }}</h3>
+        </div>
+        <div class="stat-card">
+            <h5>Total Users</h5>
+            <h3>{{ total_users }}</h3>
+        </div>
+        <div class="stat-card">
+            <h5>Borrowed Books</h5>
+            <h3 class="text-danger">{{ borrowed_books }}</h3>
+        </div>
+    </div>
+
+    <h2 class="section-title">
+        📚 Recently Added Books
+    </h2>
+    <div class="book-container">
+        {% for book in recent_books %}
+        <div class="book-card">
+{#            {% if book.cover_url %}#}
+{#            <img src="{{ book.cover_url }}" class="book-cover" alt="No Cover">#}
+{#            {% else %}#}
+{#            <img src="{% static 'img/download.jfif' %}" class="book-cover" alt="No Cover">#}
+{#            {% endif %}#}
+
+            <div class="book-details">
+                <h5>{{ book.title }}</h5>
+                <p>by {{ book.author }}</p>
+                <p class="availability">Available: {{ book.count }}</p>
+            </div>
+        </div>
+        {% empty %}
+        <p class="no-data">No books added recently.</p>
+        {% endfor %}
+    </div>
+
+    <h2 class="section-title">
+        📌 Recently Borrowed Books
+    </h2>
+    <ul class="borrowed-list">
+        {% for borrow in recent_borrowed_books %}
+        <li class="borrowed-item">
+            <b>{{ borrow.book.title }}</b> borrowed by <i>{{ borrow.user.firstname }}</i> on
+            <span class="borrow-date">{{ borrow.borrow_date|date:"F j, Y" }}</span>
+        </li>
+        {% endfor %}
+    </ul>
+
+    {% if not recent_borrowed_books %}
+    <p class="no-data">No recent borrowings.</p>
+    {% endif %}
+
+</div>
+
+{% endblock %}
