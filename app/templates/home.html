@@ -12,26 +12,26 @@
         📊 Quick Stats
     </h2>
     <div class="stats-container">
-        <a href="{% url 'all_books' %}">
-        <div class="stat-card">
+        <a href="{% url 'all_books' %}" class="stat-card">
+        <div>
             <h5>Total Books</h5>
             <h3>{{ total_books }}</h3>
         </div>
         </a>
-        <a href="{% url 'available_books' %}">
-        <div class="stat-card">
+        <a href="{% url 'available_books' %}" class="stat-card">
+        <div>
             <h5>Available Books</h5>
             <h3>{{ available_books }}</h3>
         </div>
         </a>
-        <a href="{% url 'show_users' %}">
-        <div class="stat-card">
+        <a href="{% url 'show_users' %}" class="stat-card">
+        <div>
             <h5>Total Users</h5>
             <h3>{{ total_users }}</h3>
         </div>
         </a>
-        <a href="{% url 'show_borrowed_books' %}">
-        <div class="stat-card">
+        <a href="{% url 'show_borrowed_books' %}" class="stat-card">
+        <div>
             <h5>Borrowed Books</h5>
             <h3 class="text-danger">{{ borrowed_books }}</h3>
         </div>
